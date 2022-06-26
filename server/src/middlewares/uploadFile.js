@@ -51,11 +51,11 @@ exports.uploadFile = (imageFile) => {
             }
 
             // If file empty
-            if(!req.file && !err){
-                return res.send({
-                    message: 'Please select files to upload!'
-                })
-            }
+            // if(!req.file && !err){
+            //     return res.send({
+            //         message: 'Please select files to upload!'
+            //     })
+            // }
 
             // Limit
             if(err){

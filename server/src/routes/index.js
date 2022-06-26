@@ -26,7 +26,7 @@ router.delete('/user/:id', deleteUser);
 router.post("/product", auth, uploadFile('image'), addProduct);
 router.get("/products", getAllProduct);
 router.get("/product/:id", getProductDetail);
-router.patch("/product/:id", auth, updateProduct);
+router.patch("/product/:id", auth,uploadFile('image'), updateProduct);
 router.delete("/product/:id", auth, deleteProduct);
 
 // Route Category

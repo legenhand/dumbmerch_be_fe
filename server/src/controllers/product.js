@@ -9,6 +9,7 @@ exports.addProduct = async (req, res) => {
             image: req.file.filename,
             idUser: req.user.id
         });
+
         const categoryData = await category.findOne({
             where: {
                 name: categoryName,
@@ -27,6 +28,7 @@ exports.addProduct = async (req, res) => {
                 idProduct: newProduct.id,
             });
         }
+
         const productData = await product.findOne({
             where: {
                 id: newProduct.id,
@@ -162,16 +164,21 @@ exports.getProductDetail = async (req,res) => {
 }
 
 exports.updateProduct = async (req,res) => {
-
     try {
         const { id } = req.params;
-        const newData = req.body;
+        const newData = {
+            name: req?.body?.name,
+            desc: req?.body.desc,
+            price: req?.body?.price,
+            image: req?.file?.filename,
+            qty: req?.body?.qty,
+            idUser: req?.user?.id,
+        };
         const data = await product.findOne({
             where: {
                 id
             }
         });
-
         if(!data){
             return res.send({
                 message: `Product with ID: ${id} not found!`
