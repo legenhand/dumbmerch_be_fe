@@ -1,72 +1,67 @@
-const joi = require("joi");
+const Joi = require("joi");
 const {user} = require("../../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 
 exports.register = async (req, res) => {
+    // our validation schema here
+    const schema = Joi.object({
+        name: Joi.string().min(3).required(),
+        email: Joi.string().email().min(6).required(),
+        password: Joi.string().min(6).required(),
+    });
 
-    const schema = joi.object({
-        name: joi.string().min(3).required(),
-        email: joi.string().email().required(),
-        password: joi.string().min(4).required(),
-    })
-
+    // do validation and get error object from schema.validate
     const { error } = schema.validate(req.body);
 
-    if(error){
-        return res.send({
-            error: error.details[0].message
-        })
-    }
+    // if error exist send validation error message
+    if (error)
+        return res.status(400).send({
+            error: {
+                message: error.details[0].message,
+            },
+        });
 
     try {
-        const userExist = await user.findOne({
-            where: {
-                email: req.body.email,
-            },
-            attributes: {
-                exclude: ["createdAt", "updatedAt"],
-            },
-        });
-
-        if(userExist){
-            return res.status(400).send({
-                message: `Email has already registered`
-            });
-        }
-
-        const salt = await bcrypt.genSalt(10);
+        // we generate salt (random value) with 10 rounds
+        const salt = await bcrypt.genSalt(10);breakpoi
+        // we hash password from request with salt
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
-        const data = await user.create({
+
+        const newUser = await user.create({
             name: req.body.name,
             email: req.body.email,
+            password: hashedPassword,
             status: "customer",
-            password: hashedPassword
         });
-        const token = jwt.sign({id : data.id}, process.env.TOKEN_KEY || 'PisangGoreng720');
-        res.send({
-            status : 'success',
-            message: 'User Successfully added!',
-            data: {
-                name : data.name,
-                email : data.email,
-                token : token
-            }
-        })
-    }catch (err){
-        console.log(err)
-        res.send({
-            status: 'failed',
-            message: 'Server Error'
-        })
-    }
-}
 
-exports.login = async (req,res) => {
-    const schema = joi.object({
-        email: joi.string().email().min(6).required(),
-        password: joi.string().min(4).required(),
+        // generate token
+        console.log(process.env.TOKEN_KEY);
+        const token = jwt.sign({ id: user.id }, process.env.TOKEN_KEY);
+
+        res.status(200).send({
+            status: "success...",
+            data: {
+                name: newUser.name,
+                email: newUser.email,
+                token,
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            status: "failed",
+            message: "Server Error",
+        });
+    }
+};
+
+exports.login = async (req, res) => {
+    // our validation schema here
+    const schema = Joi.object({
+        email: Joi.string().email().min(6).required(),
+        password: Joi.string().min(6).required(),
     });
 
     // do validation and get error object from schema.validate
@@ -91,35 +86,77 @@ exports.login = async (req,res) => {
         });
 
         if(!userExist){
-            return res.status(400).send({
-                message: `Email: ${req.body.email} not found`
+            return res.status(404).send({
+                status: "failed",
+                message: `Email: ${req.body.email} not found`,
             });
         }
 
-        // code here
-        const isValid = await bcrypt.compare(req.body.password, userExist.password)
+        // compare password between entered from client and from database
+        const isValid = await bcrypt.compare(req.body.password, userExist.password);
 
-        if(!isValid){
+        // check if not valid then return response with status 400 (bad request)
+        if (!isValid) {
             return res.status(400).send({
-                message: `Password not match!`
+                status: "failed",
+                message: "credential is invalid",
             });
         }
-        const data = {
-            id: userExist.id
-        }
-        console.log(data)
-        const token = jwt.sign(data, process.env.TOKEN_KEY || 'PisangGoreng720')
+
+        // generate token
+        const token = jwt.sign({ id: userExist.id }, process.env.TOKEN_KEY);
+
         res.status(200).send({
             status: "success...",
             data: {
+                id: userExist.id,
                 name: userExist.name,
                 email: userExist.email,
-                token
+                status: userExist.status,
+                token,
             },
         });
     } catch (error) {
         console.log(error);
         res.status(500).send({
+            status: "failed",
+            message: "Server Error",
+        });
+    }
+};
+exports.checkAuth = async (req, res) => {
+    try {
+        const id = req.user.id;
+
+        const dataUser = await user.findOne({
+            where: {
+                id,
+            },
+            attributes: {
+                exclude: ["createdAt", "updatedAt", "password"],
+            },
+        });
+
+        if (!dataUser) {
+            return res.status(404).send({
+                status: "failed",
+            });
+        }
+
+        res.send({
+            status: "success...",
+            data: {
+                user: {
+                    id: dataUser.id,
+                    name: dataUser.name,
+                    email: dataUser.email,
+                    status: dataUser.status,
+                },
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        res.status({
             status: "failed",
             message: "Server Error",
         });

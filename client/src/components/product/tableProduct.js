@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {dataProduct} from "../dummydata/dummydata";
+import {dataProduct} from "../../dummydata/dummydata";
 import {Link} from "react-router-dom";
-import {convertToRupiah} from "../helper/helper";
+import {convertToRupiah} from "../../helper/helper";
 
 function TableProduct(props) {
     const [data, setData] = useState(dataProduct);

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {dataProduct} from "../dummydata/dummydata";
+import {dataProduct} from "../../dummydata/dummydata";
 import {useNavigate} from "react-router-dom";
 
 
@@ -34,7 +34,7 @@ function FormProduct(props) {
 
     return (
         <div>
-            <form action="" onSubmit={handleSubmit}>
+            <form action="client/src/components/product/formProduct" onSubmit={handleSubmit}>
                 <input type="file" className="form-control" placeholder="Upload Image"/>
                 <input type="text" className="form-control my-4" placeholder="Name Product" defaultValue={data[id].name} name="name" onChange={handleChange}/>
                 <textarea name="desc" id="desc" cols="30" rows="5" className="form-control" placeholder="Description" onChange={handleChange} defaultValue={data[id].desc}></textarea>

@@ -1,9 +1,9 @@
 import React from 'react';
-import Navbar from "../components/navbar";
+import Navbar from "../../components/navbar";
 import {Link, useParams} from "react-router-dom";
-import {convertToRupiah} from "../helper/helper";
-import {dataTransaction} from "../dummydata/dummydata";
-import logo from "../assets/logo.png";
+import {convertToRupiah} from "../../helper/helper";
+import {dataTransaction} from "../../dummydata/dummydata";
+import logo from "../../assets/logo.png";
 
 function DetailTransaction(props) {
     const {id} = useParams();

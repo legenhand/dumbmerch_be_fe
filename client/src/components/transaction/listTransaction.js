@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from '../assets/logo.png';
-import {dataTransaction} from "../dummydata/dummydata";
-import {convertToRupiah} from "../helper/helper";
+import logo from '../../assets/logo.png';
+import {dataTransaction} from "../../dummydata/dummydata";
+import {convertToRupiah} from "../../helper/helper";
 import {Link} from "react-router-dom";
 
 function ListTransaction(props) {

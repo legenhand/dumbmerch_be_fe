@@ -1,18 +1,25 @@
 import logo from '../assets/logo.png';
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {statusLogin} from "../dummydata/dummydata";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {UserContext} from "../context/userContext";
 
 
 
 function Navbar() {
-    const [isLogin, setIsLogin] = useState(statusLogin.status);
-    function handleClick(e){
-        statusLogin.status = false;
-        setIsLogin(false);
+    const [state, dispatch] = useContext(UserContext)
+
+    let navigate = useNavigate()
+
+    const logout = () => {
+        console.log(state)
+        dispatch({
+            type: "LOGOUT"
+        })
+        navigate("/login")
     }
     let navTambahan = '';
-    if(isLogin){
+    if(state.isLogin){
         navTambahan = <div className="d-flex"><NavLink className={({ isActive }) =>
             isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/category">Category</NavLink>
             <NavLink className={({ isActive }) =>
@@ -20,7 +27,7 @@ function Navbar() {
             <NavLink className={({ isActive }) =>
                 isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/profile">Profile</NavLink>
 
-            <button type="button" className="btn nav-link me-4 text-white" onClick={handleClick}>Logout</button>
+            <button type="button" className="btn nav-link me-4 text-white" onClick={logout}>Logout</button>
         </div>;
     }else{
         navTambahan = <NavLink className={({ isActive }) =>

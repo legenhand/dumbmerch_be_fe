@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from "../components/navbar";
-import MyProfile from "../components/myProfile";
-import MyTransaction from "../components/myTransaction";
+import Navbar from "../../components/navbar";
+import MyProfile from "../../components/profile/myProfile";
+import MyTransaction from "../../components/transaction/myTransaction";
 
 function Profile(props) {
     return (

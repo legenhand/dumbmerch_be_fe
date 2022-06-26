@@ -1,6 +1,6 @@
 import React from 'react';
-import Navbar from "../components/navbar";
-import TableProduct from "../components/tableProduct";
+import Navbar from "../../components/navbar";
+import TableProduct from "../../components/product/tableProduct";
 
 function ProductList(props) {
     return (

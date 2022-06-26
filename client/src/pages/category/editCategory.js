@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from "../components/navbar";
-import FormCategory from "../components/formCategory";
+import Navbar from "../../components/navbar";
 import {useParams} from "react-router-dom";
+import EditFormCategory from "../../components/category/editFormCategory";
 
 function EditCategory(props) {
     let { id } = useParams();
@@ -10,7 +10,7 @@ function EditCategory(props) {
             <Navbar/>
             <div className="container-fluid bg-black p-5 text-white" style={{height: '88vh'}}>
                 <h4>Edit Category</h4>
-                <FormCategory id={id}/>
+                <EditFormCategory id={id}/>
             </div>
         </div>
     );

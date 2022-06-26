@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginregisterDetail from "../components/loginregisterDetail";
-import RegisterForm from "../components/registerForm";
+import LoginregisterDetail from "../../components/auth/loginregisterDetail";
+import RegisterForm from "../../components/auth/registerForm";
 
 function Register(props) {
     return (

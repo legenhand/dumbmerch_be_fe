@@ -1,5 +1,5 @@
-import Navbar from "../components/navbar";
-import TableCategory from "../components/tableCategory";
+import Navbar from "../../components/navbar";
+import TableCategory from "../../components/category/tableCategory";
 function CategoryList() {
     return (
         <div>

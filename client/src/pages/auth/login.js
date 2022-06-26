@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginForm from "../components/loginForm";
-import LoginregisterDetail from "../components/loginregisterDetail";
+import LoginForm from "../../components/auth/loginForm";
+import LoginregisterDetail from "../../components/auth/loginregisterDetail";
 function Login(props) {
     return (
         <div className="container-fluid bg-black p-5" style={{height: '100vh'}}>

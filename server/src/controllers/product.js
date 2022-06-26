@@ -72,7 +72,7 @@ exports.addProduct = async (req, res) => {
 
 exports.getAllProduct = async (req,res) => {
     try {
-        const data = await product.findAll({
+        let data = await product.findAll({
             include: [
                 {
                     model: user,
@@ -99,6 +99,10 @@ exports.getAllProduct = async (req,res) => {
             },
         });
 
+        data = JSON.parse(JSON.stringify(data));
+        data = data.map((item) => {
+            return { ...item, image: process.env.PATH_FILE + item.image };
+        });
         res.send({
             status: "success...",
             data,
@@ -116,7 +120,7 @@ exports.getProductDetail = async (req,res) => {
 
     try {
         const { id } = req.params;
-        const data = await product.findOne({
+        let data = await product.findOne({
             include: [
                 {
                     model: category,
@@ -138,7 +142,12 @@ exports.getProductDetail = async (req,res) => {
                 id : id
             }
         });
+        data = JSON.parse(JSON.stringify(data));
 
+        data = {
+            ...data,
+            image: process.env.PATH_FILE + data.image,
+        };
         res.send({
             status: "success...",
             data,

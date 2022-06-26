@@ -1,5 +1,5 @@
 import React from 'react';
-import {dataProfile} from "../dummydata/dummydata";
+import {dataProfile} from "../../dummydata/dummydata";
 
 function MyProfile(props) {
     return (
