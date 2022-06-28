@@ -1,4 +1,3 @@
-import {dataCategory} from "../../dummydata/dummydata";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
@@ -49,8 +48,9 @@ function TableCategory() {
     }, [confirmDelete]);
 
     return (
-        <div className="container-fluid bg-black p-5" style={{
-            height: "88vh"
+        <div className="container-fluid bg-black px-5" style={{
+            height: "100%",
+            minHeight: "88vh"
         }}>
             <div className="d-flex">
                 <Link to={"/add_category"}>

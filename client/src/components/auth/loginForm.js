@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {dataProduct, statusLogin} from "../../dummydata/dummydata";
 import {UserContext} from "../../context/userContext";
 import {API} from "../../config/api";
 import {Alert} from "react-bootstrap";

@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from "../../components/navbar";
-import FormProduct from "../../components/product/formProduct";
+import EditFormProduct from "../../components/product/editFormProduct";
 import {useParams} from "react-router-dom";
 
 function EditProduct(props) {
@@ -10,7 +10,7 @@ function EditProduct(props) {
             <Navbar/>
             <div className="container-fluid bg-black p-5 text-white" style={{height: '88vh'}}>
                 <h4>Edit Product</h4>
-                <FormProduct id={id}/>
+                <EditFormProduct id={id}/>
             </div>
         </div>
     );

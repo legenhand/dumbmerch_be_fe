@@ -1,8 +1,8 @@
 
-import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import CategoryList from "./pages/category/categoryList";
 import ProductList from "./pages/product/productList";
-import Complain from "./pages/complain";
+import Complain from "./pages/complain/complain";
 import Profile from "./pages/profile/profile";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
@@ -15,13 +15,14 @@ import Index from "./components";
 import { API, setAuthToken } from './config/api';
 import {UserContext} from "./context/userContext";
 import AddCategory from "./pages/category/addCategory";
+import AddProduct from "./pages/product/addProduct";
+import AdminComplain from "./pages/complain/admincomplain";
 
 
 
 function App() {
     let navigate = useNavigate();
     const [state, dispatch] = useContext(UserContext);
-
     // Init token on axios every time the app is refreshed here ...
     useEffect(() => {
         if (localStorage.token) {
@@ -33,13 +34,12 @@ function App() {
             navigate('/login');
         } else {
             if (state.user.status === 'admin') {
-                navigate('/product-admin');
+                navigate('/product');
             } else if (state.user.status === 'customer') {
                 navigate('/');
             }
         }
     }, [state]);
-
     const checkUser = async () => {
         try {
             const response = await API.get('/check-auth');
@@ -78,11 +78,13 @@ function App() {
                 <Route path="category" element={<CategoryList />} />
                 <Route path="product" element={<ProductList />} />
                 <Route path="complain" element={<Complain />} />
+                <Route path="complain-admin" element={<AdminComplain />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
                 <Route path="detail/:id" element={<DetailProduct />} />
                 <Route path="add_category" element={<AddCategory />} />
+                <Route path="add_product" element={<AddProduct />} />
                 <Route path="edit_product" element={<EditProduct />} />
                 <Route path="edit_category" element={<EditCategory />} />
                 <Route path="edit_category/:id" element={<EditCategory />} />

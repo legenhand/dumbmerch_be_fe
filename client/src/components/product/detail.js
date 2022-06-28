@@ -1,19 +1,49 @@
-import React, {useState} from 'react';
-import {dataProduct} from "../../dummydata/dummydata";
+import React, {useState, useContext} from 'react';
 import {convertToRupiah} from "../../helper/helper";
-import {useQuery} from "react-query";
+import {useMutation, useQuery} from "react-query";
 import {API} from "../../config/api";
+import {useNavigate} from "react-router-dom";
+import {UserContext} from "../../context/userContext";
 
 function Detail(props) {
-    const [data, setData] = useState(dataProduct);
+    const navigate = useNavigate();
     const id = props.id;
+    const [state, dispatch] = useContext(UserContext);
     let { data: product, refetch } = useQuery('productDetailCache', async () => {
         const response = await API.get(`/product/${id}`);
         return response.data.data;
     });
+    const handleBuy = useMutation(async () => {
+        try {
+            // Get data from product
+            const data = {
+                idProduct: product.id,
+                idSeller: product.user.id,
+                price: product.price,
+                idBuyer: state.user.id,
+                status: 'in progress'
+            };
+
+
+            // Data body
+            const body = JSON.stringify(data);
+
+            // Configuration
+
+            // Insert transaction data
+            await API.post("/transaction", data);
+
+            navigate("/profile");
+        } catch (error) {
+            console.log(error);
+        }
+    });
 
     return (
-        <div className="container-fluid bg-black p-5" style={{height: '88vh'}}>
+        <div className="container-fluid bg-black" style={{
+            height: "100%",
+            minHeight: "88vh"
+        }}>
             <div className="row mx-5">
                 <div className="col-5">
                     <img src={product?.image} alt="" height="500vh" width="400vw"/>
@@ -25,7 +55,7 @@ function Detail(props) {
                         {product?.desc}
                     </p>
                     <h4 className="text-primary text-end">{convertToRupiah(product?.price)}</h4>
-                    <button type="button" className="btn btn-danger w-100 my-4">Buy</button>
+                    <button type="button" className="btn btn-danger w-100 my-4" onClick={() => handleBuy.mutate()}>Buy</button>
                 </div>
             </div>
         </div>

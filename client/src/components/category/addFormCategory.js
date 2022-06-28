@@ -12,13 +12,11 @@ function AddFormCategory() {
     const [message, setMessage] = useState(null);
     function handleChange(event) {
         setData({name: event.target.value});
-        console.log(data);
     }
 
     let navigate = useNavigate();
 
     const handleSubmit = useMutation(async (e) => {
-        console.log(data);
         try {
             e.preventDefault();
             // Configuration Content-type
@@ -35,7 +33,6 @@ function AddFormCategory() {
             const response = await API.post('/category', body, config);
 
             // Handling response here
-            console.log(response.data)
             navigate("../category", { replace: true })
         } catch (error) {
             const alert = (

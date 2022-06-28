@@ -3,30 +3,30 @@ import {useNavigate} from "react-router-dom";
 import {useMutation, useQuery} from "react-query";
 import {API} from "../../config/api";
 import {Alert} from "react-bootstrap";
+import {useEffect} from "react";
 
 function EditFormCategory(props) {
     const id = props.id;
+
     const initialValue = {
         name: ''
     }
-    let { data: category , isLoading} = useQuery('editCategoryCache', async () => {
-        const response = await API.get(`/category/${id}`);
-        console.log(response);
-        return response.data.data;
-    });
-
 
     const [data, setData] = useState(initialValue);
+
     const [message, setMessage] = useState(null);
     function handleChange(event) {
         setData({name: event.target.value});
-        console.log(data);
     }
+
+    let { data: category , isLoading} = useQuery('editCategoryCache', async () => {
+        const response = await API.get(`/category/${id}`);
+        return response.data.data;
+    });
 
     let navigate = useNavigate();
 
     const handleSubmit = useMutation(async (e) => {
-        console.log(data);
         try {
             e.preventDefault();
             // Configuration Content-type
@@ -43,7 +43,6 @@ function EditFormCategory(props) {
             const response = await API.patch(`/category/${id}`, body, config);
 
             // Handling response here
-            console.log(response.data)
             navigate("../category", { replace: true })
         } catch (error) {
             const alert = (
@@ -57,12 +56,21 @@ function EditFormCategory(props) {
         }
     });
 
+    useEffect(() => {
+        if (category) {
+            setData({
+                ...data,
+                name: category.name,
+            });
+        }
+    }, [data]);
+
 
     return (
         <div>
             {message}
             <form onSubmit={(e) => handleSubmit.mutate(e)}>
-                <input type="text" className="form-control my-4" placeholder="name category" defaultValue={category?.name}  onChange={handleChange}/>
+                <input type="text" className="form-control my-4" placeholder="name category" defaultValue={data?.name}  onChange={handleChange}/>
                 <button className="btn btn-success w-100">Save</button>
             </form>
         </div>

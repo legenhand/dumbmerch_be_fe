@@ -18,12 +18,10 @@ function RegisterForm(props) {
             ...data,
             [name]: value,
         });
-        console.log(data);
     }
     const navigate = useNavigate()
 
     const handleSubmit = useMutation(async (e) => {
-        console.log(data);
         try {
             e.preventDefault();
 
@@ -41,7 +39,6 @@ function RegisterForm(props) {
             const response = await API.post('/register', body, config);
 
             // Handling response here
-            console.log(response.data)
             navigate("../login", { replace: true })
         } catch (error) {
             const alert = (

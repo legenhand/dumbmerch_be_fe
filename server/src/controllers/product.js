@@ -2,7 +2,6 @@ const { product, category, categoryProduct, user } = require('../../models');
 
 exports.addProduct = async (req, res) => {
     try {
-        console.log(req.body);
         const { category: categoryName , ...data } = req.body;
         const newProduct = await product.create({
             ...req.body,
@@ -125,6 +124,13 @@ exports.getProductDetail = async (req,res) => {
         let data = await product.findOne({
             include: [
                 {
+                    model: user,
+                    as: "user",
+                    attributes: {
+                        exclude: ["createdAt", "updatedAt", "password"],
+                    },
+                },
+                {
                     model: category,
                     as: "categories",
                     through: {
@@ -132,6 +138,7 @@ exports.getProductDetail = async (req,res) => {
                         as: "bridge",
                         attributes: [],
                     },
+
                     attributes: {
                         exclude: ["createdAt", "updatedAt"],
                     },

@@ -10,25 +10,33 @@ function Navbar() {
     const [state, dispatch] = useContext(UserContext)
 
     let navigate = useNavigate()
-
     const logout = () => {
-        console.log(state)
         dispatch({
             type: "LOGOUT"
         })
         navigate("/login")
     }
     let navTambahan = '';
-    if(state.isLogin){
-        navTambahan = <div className="d-flex"><NavLink className={({ isActive }) =>
-            isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/category">Category</NavLink>
-            <NavLink className={({ isActive }) =>
-                isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/product">Product</NavLink>
-            <NavLink className={({ isActive }) =>
-                isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/profile">Profile</NavLink>
 
-            <button type="button" className="btn nav-link me-4 text-white" onClick={logout}>Logout</button>
-        </div>;
+    let isComplainAdmin = false;
+    if(state.isLogin){
+        if (state.user.status === 'admin') {
+            isComplainAdmin = true;
+            navTambahan = <div className="d-flex"><NavLink className={({ isActive }) =>
+                isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/category">Category</NavLink>
+                <NavLink className={({ isActive }) =>
+                    isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/product">Product</NavLink>
+                <NavLink className={({ isActive }) =>
+                    isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/profile">Profile</NavLink>
+                <button type="button" className="btn nav-link me-4 text-white" onClick={logout}>Logout</button>
+            </div>;
+        } else if (state.user.status === 'customer') {
+            navTambahan = <div className="d-flex">
+                <NavLink className={({ isActive }) =>
+                    isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/profile">Profile</NavLink>
+                <button type="button" className="btn nav-link me-4 text-white" onClick={logout}>Logout</button>
+            </div>;
+        }
     }else{
         navTambahan = <NavLink className={({ isActive }) =>
             isActive ? "nav-link me-4 text-primary" : "nav-link me-4 text-white" } to="/login">Login</NavLink>
@@ -48,7 +56,7 @@ function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse ms-auto" id="navbarSupportedContent">
                     <NavLink className={({ isActive }) =>
-                        isActive ? "nav-link ms-auto me-4 text-primary" : "nav-link ms-auto me-4 text-white" } to="/complain">Complain</NavLink>
+                        isActive ? "nav-link ms-auto me-4 text-primary" : "nav-link ms-auto me-4 text-white" } to={isComplainAdmin ? '/complain-admin' : '/complain'}>Complain</NavLink>
                     {navTambahan}
                 </div>
             </div>
