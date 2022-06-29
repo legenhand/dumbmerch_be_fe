@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { API } from '../../config/api';
 import {Alert} from "react-bootstrap";
 
-function RegisterForm(props) {
+function RegisterForm() {
     const initialValues = {
         name: '',
         email : '',
@@ -36,7 +36,7 @@ function RegisterForm(props) {
             const body = JSON.stringify(data);
 
             // Insert data user to database
-            const response = await API.post('/register', body, config);
+            await API.post('/register', body, config);
 
             // Handling response here
             navigate("../login", { replace: true })

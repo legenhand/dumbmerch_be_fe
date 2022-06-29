@@ -1,7 +1,6 @@
 import logo from '../assets/logo.png';
 import {Link, NavLink, useNavigate} from "react-router-dom";
-import {statusLogin} from "../dummydata/dummydata";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import {UserContext} from "../context/userContext";
 
 

@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar";
 import MyProfile from "../../components/profile/myProfile";
 import MyTransaction from "../../components/transaction/myTransaction";
 
-function Profile(props) {
+function Profile() {
     return (
         <div>
             <Navbar/>

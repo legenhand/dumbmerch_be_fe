@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar";
 import {useParams} from "react-router-dom";
 import EditFormCategory from "../../components/category/editFormCategory";
 
-function EditCategory(props) {
+function EditCategory() {
     let { id } = useParams();
     return (
         <div>

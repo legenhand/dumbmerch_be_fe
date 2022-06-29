@@ -3,7 +3,7 @@ import logo from "../../assets/logo.png";
 import {Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function LoginregisterDetail(props) {
+function LoginregisterDetail() {
     let navigate = useNavigate();
     async function handleNavigateLogin(event) {
         event.preventDefault();

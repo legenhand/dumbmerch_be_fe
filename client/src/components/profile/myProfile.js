@@ -1,7 +1,7 @@
 import React from 'react';
 import {dataProfile} from "../../dummydata/dummydata";
 
-function MyProfile(props) {
+function MyProfile() {
     return (
         <div className="col-7">
             <h4 className="text-primary">My Profile</h4>

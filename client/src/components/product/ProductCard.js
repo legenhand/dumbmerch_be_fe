@@ -3,9 +3,9 @@ import {convertToRupiah} from "../../helper/helper";
 import {Link} from "react-router-dom";
 import {useQuery} from "react-query";
 import {API} from "../../config/api";
-function ProductCard(props) {
+function ProductCard() {
 
-    let { data: products, refetch } = useQuery('productsCache', async () => {
+    let { data: products } = useQuery('productsCache', async () => {
         const response = await API.get('/products');
         return response.data.data;
     });

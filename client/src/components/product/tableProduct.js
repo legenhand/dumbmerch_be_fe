@@ -7,7 +7,7 @@ import {Button} from "react-bootstrap";
 import {useEffect} from "react";
 import DeleteData from "../modal/DeleteData";
 
-function TableProduct(props) {
+function TableProduct() {
     let count = 0;
     const [idDelete, setIdDelete] = useState(null);
     const [confirmDelete, setConfirmDelete] = useState(null);
@@ -19,9 +19,6 @@ function TableProduct(props) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    function handleRemove(index){
-
-    }
     const handleDelete = (id) => {
         setIdDelete(id);
         handleShow();

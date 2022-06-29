@@ -7,7 +7,6 @@ import {useEffect} from "react";
 
 function EditFormCategory(props) {
     const id = props.id;
-
     const initialValue = {
         name: ''
     }
@@ -19,7 +18,7 @@ function EditFormCategory(props) {
         setData({name: event.target.value});
     }
 
-    let { data: category , isLoading} = useQuery('editCategoryCache', async () => {
+    let { data: category } = useQuery('editCategoryCache', async () => {
         const response = await API.get(`/category/${id}`);
         return response.data.data;
     });
@@ -40,7 +39,7 @@ function EditFormCategory(props) {
             const body = JSON.stringify(data);
 
             // Insert / Update data categories to database
-            const response = await API.patch(`/category/${id}`, body, config);
+            await API.patch(`/category/${id}`, body, config);
 
             // Handling response here
             navigate("../category", { replace: true })
@@ -63,7 +62,7 @@ function EditFormCategory(props) {
                 name: category.name,
             });
         }
-    }, [data]);
+    }, [category , data]);
 
 
     return (

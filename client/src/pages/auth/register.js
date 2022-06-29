@@ -2,7 +2,7 @@ import React from 'react';
 import LoginregisterDetail from "../../components/auth/loginregisterDetail";
 import RegisterForm from "../../components/auth/registerForm";
 
-function Register(props) {
+function Register() {
     return (
         <div className="container-fluid bg-black p-5" style={{height: '100vh'}}>
             <div className="row p-5">

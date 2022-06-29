@@ -1,9 +1,8 @@
 import React from 'react';
 import Navbar from "../../components/navbar";
 import AddFormCategory from "../../components/category/addFormCategory";
-import {useParams} from "react-router-dom";
 
-function EditCategory(props) {
+function EditCategory() {
     return (
         <div>
             <Navbar/>

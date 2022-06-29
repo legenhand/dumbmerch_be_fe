@@ -6,8 +6,8 @@ import {useQuery} from "react-query";
 import {API} from "../../config/api";
 import {UserContext} from "../../context/userContext";
 
-function ListTransaction(props) {
-    const [state, dispatch] = useContext(UserContext);
+function ListTransaction() {
+    const [state] = useContext(UserContext);
     const id = state.user.id;
     const [transactions, setTransactions] = useState(null);
     let { data: transaction } = useQuery('transactionAllCache', async () => {

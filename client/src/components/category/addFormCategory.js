@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {useMutation, useQuery} from "react-query";
+import {useMutation} from "react-query";
 import {API} from "../../config/api";
 import {Alert} from "react-bootstrap";
 
@@ -30,7 +30,7 @@ function AddFormCategory() {
             const body = JSON.stringify(data);
 
             // Insert / Update data categories to database
-            const response = await API.post('/category', body, config);
+            await API.post('/category', body, config);
 
             // Handling response here
             navigate("../category", { replace: true })

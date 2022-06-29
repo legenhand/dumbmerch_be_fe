@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar";
 import Detail from "../../components/product/detail";
 import {useParams} from "react-router-dom";
 
-function DetailProduct(props) {
+function DetailProduct() {
     let { id } = useParams();
     return (
         <div>

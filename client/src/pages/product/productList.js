@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from "../../components/navbar";
 import TableProduct from "../../components/product/tableProduct";
 
-function ProductList(props) {
+function ProductList() {
     return (
         <div>
             <Navbar/>

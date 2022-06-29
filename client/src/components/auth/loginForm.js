@@ -5,7 +5,7 @@ import {API} from "../../config/api";
 import {Alert} from "react-bootstrap";
 import {useMutation} from "react-query";
 
-function LoginForm(props) {
+function LoginForm() {
     const [state, dispatch] = useContext(UserContext);
     const [message, setMessage] = useState(null);
     const initialValues = {

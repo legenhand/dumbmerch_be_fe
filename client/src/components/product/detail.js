@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useContext} from 'react';
 import {convertToRupiah} from "../../helper/helper";
 import {useMutation, useQuery} from "react-query";
 import {API} from "../../config/api";
@@ -8,8 +8,8 @@ import {UserContext} from "../../context/userContext";
 function Detail(props) {
     const navigate = useNavigate();
     const id = props.id;
-    const [state, dispatch] = useContext(UserContext);
-    let { data: product, refetch } = useQuery('productDetailCache', async () => {
+    const [state] = useContext(UserContext);
+    let { data: product } = useQuery('productDetailCache', async () => {
         const response = await API.get(`/product/${id}`);
         return response.data.data;
     });
@@ -23,10 +23,6 @@ function Detail(props) {
                 idBuyer: state.user.id,
                 status: 'in progress'
             };
-
-
-            // Data body
-            const body = JSON.stringify(data);
 
             // Configuration
 

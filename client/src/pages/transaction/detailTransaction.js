@@ -1,14 +1,12 @@
 import React from 'react';
 import Navbar from "../../components/navbar";
-import {Link, useParams} from "react-router-dom";
-import {convertToRupiah} from "../../helper/helper";
-import {dataTransaction} from "../../dummydata/dummydata";
+import { useParams} from "react-router-dom";
 import logo from "../../assets/logo.png";
 import {useEffect, useState} from "react";
 import {useQuery} from "react-query";
 import {API} from "../../config/api";
 
-function DetailTransaction(props) {
+function DetailTransaction() {
     const {id} = useParams();
     const [transactions, setTransactions] = useState(null);
     let { data: transaction } = useQuery('transactiondetailCache', async () => {

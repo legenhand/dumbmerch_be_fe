@@ -17,17 +17,13 @@ function EditFormProduct(props) {
         category: ''
     }
 
-    let { data: product , isLoading} = useQuery('editProductCache', async () => {
+    let { data: product} = useQuery('editProductCache', async () => {
         const response = await API.get(`/product/${id}`);
         return response.data.data;
     });
 
-    const [categories, setCategories] = useState([]); //Store all category data
-    const [categoryId, setCategoryId] = useState([]); //Save the selected category id
     const [preview, setPreview] = useState(null); //For image preview
     const [form, setForm] = useState(initialValues);
-    const [products, setProducts] = useState({}); //Store product data
-    const [message, setMessage] = useState(null);
 
     useEffect(() => {
         if (product) {
@@ -40,7 +36,6 @@ function EditFormProduct(props) {
                 qty: product.qty.toString(),
                 category: product.categories[0].name
             });
-            setProducts(product);
         }
     }, [product]);
 
@@ -86,7 +81,7 @@ function EditFormProduct(props) {
 
 
             // Insert product data
-            const response = await API.patch(`/product/${id}`, formData, config);
+            await API.patch(`/product/${id}`, formData, config);
 
             navigate('/product');
         } catch (error) {

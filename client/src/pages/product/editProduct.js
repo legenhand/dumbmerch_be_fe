@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar";
 import EditFormProduct from "../../components/product/editFormProduct";
 import {useParams} from "react-router-dom";
 
-function EditProduct(props) {
+function EditProduct() {
     let {id} = useParams();
     return (
         <div>

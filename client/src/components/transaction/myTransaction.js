@@ -1,7 +1,7 @@
 import React from 'react';
 import ListTransaction from "./listTransaction";
 
-function MyTransaction(props) {
+function MyTransaction() {
     return (
         <div className="col">
             <h4 className="text-primary">My Transaction</h4>

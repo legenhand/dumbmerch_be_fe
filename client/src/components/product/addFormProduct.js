@@ -5,7 +5,7 @@ import {API} from "../../config/api";
 
 
 
-function AddFormProduct(props) {
+function AddFormProduct() {
     const initialValues = {
         name : '',
         desc : '',
@@ -14,11 +14,8 @@ function AddFormProduct(props) {
         image: '',
         category: ''
     }
-    const [categories, setCategories] = useState([]); //Store all category data
-    const [categoryId, setCategoryId] = useState([]); //Save the selected category id
     const [preview, setPreview] = useState(null); //For image preview
     const [form, setForm] = useState(initialValues);
-    const [message, setMessage] = useState(null);
 
     // Handle change data on form
     const handleChange = (e) => {
@@ -60,7 +57,7 @@ function AddFormProduct(props) {
 
 
             // Insert product data
-            const response = await API.post('/product', formData, config);
+            await API.post('/product', formData, config);
 
             navigate('/product');
         } catch (error) {

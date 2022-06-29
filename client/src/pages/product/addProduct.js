@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from "../../components/navbar";
 import AddFormProduct from "../../components/product/addFormProduct";
 
-function AddProduct(props) {
+function AddProduct() {
     return (
         <div>
             <Navbar/>

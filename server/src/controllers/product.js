@@ -2,7 +2,7 @@ const { product, category, categoryProduct, user } = require('../../models');
 
 exports.addProduct = async (req, res) => {
     try {
-        const { category: categoryName , ...data } = req.body;
+        const { category: categoryName } = req.body;
         const newProduct = await product.create({
             ...req.body,
             image: req.file.filename,
