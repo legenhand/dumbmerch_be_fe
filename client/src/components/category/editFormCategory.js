@@ -58,11 +58,10 @@ function EditFormCategory(props) {
     useEffect(() => {
         if (category) {
             setData({
-                ...data,
                 name: category.name,
             });
         }
-    }, [category , data]);
+    }, [category]);
 
 
     return (
