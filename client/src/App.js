@@ -40,6 +40,7 @@ function App() {
             }
         }
     }, [state]);
+
     const checkUser = async () => {
         try {
             const response = await API.get('/check-auth');
@@ -50,7 +51,6 @@ function App() {
                     type: 'AUTH_ERROR',
                 });
             }
-
             // Get user data
             let payload = response.data.data.user;
             // Get token from local storage

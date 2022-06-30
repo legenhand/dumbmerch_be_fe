@@ -7,10 +7,14 @@ import {UserContext} from "../../context/userContext";
 
 function Detail(props) {
     const navigate = useNavigate();
-    const id = props.id;
+   if (localStorage.token) {
+            checkUser();
+        } const id = props.id;
     const [state] = useContext(UserContext);
     let { data: product } = useQuery('productDetailCache', async () => {
-        const response = await API.get(`/product/${id}`);
+   if (localStorage.token) {
+            checkUser();
+        }     const response = await API.get(`/product/${id}`);
         return response.data.data;
     });
     const handleBuy = useMutation(async () => {
