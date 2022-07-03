@@ -23,7 +23,7 @@ function ListTransaction() {
 
     return (
         <div className="container-fluid">
-            {transactions?.map((data,index) => <div className="row bg-grey my-2" style={{height: '22vh'}}>
+            {transactions?.map((data,index) => <div className="row bg-grey my-2" style={{height: '100%'}}>
                     <div className="col" key={index}>
                         <div className="d-flex flex-row">
                             <div className="my-auto me-3">
@@ -36,8 +36,8 @@ function ListTransaction() {
                                 <span className="text-white">Price : {convertToRupiah(data.price)}</span> <br/>
                                 <span className="text-white fw-bolder">Sub Total : {convertToRupiah(data.price)}</span>
                             </div>
-                            <div className="d-flex me-2">
-                                <img src={logo} alt="" height="100px" className="my-auto"/>
+                            <div className={`d-flex me-2 my-2 status-transaction-${data.status} align-items-center justify-content-center rounded w-25`}>
+                                {data.status}
                             </div>
                         </div>
                     </div>

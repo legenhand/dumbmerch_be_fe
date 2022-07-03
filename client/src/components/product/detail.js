@@ -1,4 +1,4 @@
-import React, { useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {convertToRupiah} from "../../helper/helper";
 import {useMutation, useQuery} from "react-query";
 import {API} from "../../config/api";
@@ -7,14 +7,10 @@ import {UserContext} from "../../context/userContext";
 
 function Detail(props) {
     const navigate = useNavigate();
-   if (localStorage.token) {
-            checkUser();
-        } const id = props.id;
+    const id = props.id;
     const [state] = useContext(UserContext);
     let { data: product } = useQuery('productDetailCache', async () => {
-   if (localStorage.token) {
-            checkUser();
-        }     const response = await API.get(`/product/${id}`);
+    const response = await API.get(`/product/${id}`);
         return response.data.data;
     });
     const handleBuy = useMutation(async () => {
@@ -24,20 +20,69 @@ function Detail(props) {
                 idProduct: product.id,
                 idSeller: product.user.id,
                 price: product.price,
-                idBuyer: state.user.id,
-                status: 'in progress'
             };
 
+            // Data body
+            const body = JSON.stringify(data);
+            console.log(body);
             // Configuration
+            const config = {
+                method: "POST",
+                headers: {
+                    Authorization: "Basic " + localStorage.token,
+                    "Content-type": "application/json",
+                },
+            };
 
             // Insert transaction data
-            await API.post("/transaction", data);
+            const response = await API.post("/transaction", body, config);
+            console.log(response);
+            // Create variabel for store token payment from response here ...
+            const token = response.data.payment.token;
 
-            navigate("/profile");
+            // Init Snap for display payment page with token here ...
+            window.snap.pay(token,{
+                onSuccess: function (result) {
+                    /* You may add your own implementation here */
+                    console.log(result);
+                    navigate("/profile");
+                },
+                onPending: function (result) {
+                    /* You may add your own implementation here */
+                    console.log(result);
+                    navigate("/profile");
+                },
+                onError: function (result) {
+                    /* You may add your own implementation here */
+                    navigate(result);
+                },
+                onClose: function () {
+                    /* You may add your own implementation here */
+                    alert("you closed the popup without finishing the payment");
+                },
+            })
         } catch (error) {
             console.log(error);
         }
     });
+
+    useEffect(() => {
+        //change this to the script source you want to load, for example this is snap.js sandbox env
+        const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+        //change this according to your client-key
+        const myMidtransClientKey = "SB-Mid-client-LQsMqwYk9hPkOoEx";
+
+        let scriptTag = document.createElement("script");
+        scriptTag.src = midtransScriptUrl;
+        // optional if you want to set script attribute
+        // for example snap.js have data-client-key attribute
+        scriptTag.setAttribute("data-client-key", myMidtransClientKey);
+
+        document.body.appendChild(scriptTag);
+        return () => {
+            document.body.removeChild(scriptTag);
+        };
+    }, []);
 
     return (
         <div className="container-fluid bg-black" style={{

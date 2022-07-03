@@ -170,3 +170,15 @@
     border: none;
     color: #ffffff;
 }
+
+.status-transaction-success {
+    background-color: #268d37b0;
+}
+
+.status-transaction-pending {
+    background-color: #8b8d265b;
+}
+
+.status-transaction-failed {
+    background-color: #8d26265b;
+}

@@ -4,7 +4,7 @@ const router = express.Router();
 const {auth} = require('../middlewares/auth')
 const {addProduct, getAllProduct, getProductDetail, updateProduct, deleteProduct} = require("../controllers/product");
 const {addCategory, getAllCategory, getCategoryDetail, updateCategory, deleteCategory} = require("../controllers/category");
-const {addTransaction, getAllTransaction, getTransactionByUserId, getTransaction} = require("../controllers/transaction");
+const {addTransaction, getAllTransaction, getTransactionByUserId, getTransaction, notification} = require("../controllers/transaction");
 const {register, login, checkAuth} = require("../controllers/auth");
 const {uploadFile} = require("../middlewares/uploadFile");
 const {addUsers, getUsers, getUser, updateUser, deleteUser} = require("../controllers/user");
@@ -42,6 +42,10 @@ router.post("/transaction", auth, addTransaction);
 router.get("/transaction/:id", auth, getTransactionByUserId);
 router.get("/transactions", auth, getAllTransaction);
 router.get("/transaction/detail/:id", auth, getTransaction);
+
+// Route Notification
+router.post("/notification", notification);
+
 router.get("/check-auth", auth, checkAuth);
 
 module.exports = router;
